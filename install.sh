@@ -2,11 +2,8 @@
 
 echo "Installing dotfiles"
 
-echo "Initializing submodule(s)"
-git submodule update --init --recursive
-
 # oh-my-zsh
-sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+git clone https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh
 
 source install/link.sh
 
