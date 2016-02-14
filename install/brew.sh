@@ -41,5 +41,3 @@ brew install pandoc
 brew install htop-osx
 brew install sphinx
 brew install zsh-completions
-
-exit 0
