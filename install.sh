@@ -31,6 +31,8 @@ fi
 echo "creating vim directories"
 mkdir -p ~/.vim-tmp
 
+echo "Installing additional stuff"
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 echo "Configuring zsh as default shell"
 chsh -s $(which zsh)
