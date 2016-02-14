@@ -18,6 +18,7 @@ brew install wget
 
 # development tools
 brew install git
+brew install git-flow
 brew install hub
 brew install macvim --override-system-vim
 brew install reattach-to-user-namespace
@@ -27,10 +28,18 @@ brew install highlight
 brew install nvm
 brew install z
 brew install markdown
+brew install midnight-commander
 
 brew install vim
 
 # install neovim
 brew install neovim/neovim/neovim
+
+# Productivity stuff
+brew install Caskroom/cask/alfred
+brew install pandoc
+brew install htop-osx
+brew install sphinx
+brew install zsh-completions
 
 exit 0
