@@ -1,83 +1,176 @@
-export DOTFILES=$HOME/.dotfiles
-export ZSH=$DOTFILES/zsh
+# Path to your oh-my-zsh installation.
+export ZSH=/Users/cmg/.oh-my-zsh
 
-# display how long all tasks over 10 seconds take
-export REPORTTIME=10
+export GIT_USER="cmg-dev"
 
-[[ -e ~/.terminfo ]] && export TERMINFO_DIRS=~/.terminfo:/usr/share/terminfo
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="like-a-rainbow"
 
-# define the code directory
-# This is where my code exists and where I want the `c` autocomplete to work from exclusively
-if [[ -d ~/code ]]; then
-    export CODE_DIR=~/code
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git bundler osx rake virtualenv ssh-agent git-flow battery brew gitignore mix vim-interaction)
+
+# User configuration
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/TeX/texbin:/usr/local/include/nr3:/usr/local/include/nr3:/opt/local/bin:/opt/local/sbin"
+# export MANPATH="/usr/local/man:$MANPATH"
+
+source $ZSH/oh-my-zsh.sh
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='vim'
 fi
 
-# source all .zsh files inside of the zsh/ directory
-for config ($ZSH/**/*.zsh) source $config
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
 
-if [[ -a ~/.localrc ]]; then
-    source ~/.localrc
+# ssh
+# export SSH_KEY_PATH="~/.ssh/dsa_id"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+alias zshconfig="vim ~/.zshrc"
+alias ohmyzsh="vim ~/.oh-my-zsh"
+alias themeconfig="vim ~/.oh-my-zsh/themes/like-a-rainbow.zsh-theme"
+
+###########################################################
+# 5Minds add ons
+###########################################################
+
+alias cdable="cd ~/Google\ Drive/AE-Unterstützung\ 5Minds/able/int/documents/"
+export KONZEPTE_DIR=~/Google\ Drive/AE-Unterstützung\ 5Minds/able/int/documents/konzepte
+export HCM_DIR=~/Google\ Drive/AE-Unterstützung\ 5Minds/able/int/documents/hcm
+
+#
+# Finder aliases to display or hide all files
+#
+if [[ $(uname) == 'Darwin' ]] then
+	alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
+	alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
+else
 fi
 
+alias ts='tmux ls'
+alias tk='tmux kill-server'
 
-# initialize autocomplete
-autoload -U compinit
-compinit
+f() {
+	grep -rl "$1" .
+}
 
-for config ($ZSH/**/*completion.sh) source $config
+#
+# Build a docx from given file using pandoc
+# This will use the reference document specified in MINDS_PANDOC_TEMPLATE_CONCEPT
+#
+pandocxify() {
+	pandoc -S --reference-docx $MINDS_PANDOC_TEMPLATE_CONCEPT -o $2 $1
+}
 
-export EDITOR='nvim'
+SerachAndReplace() {
+	#LANG=C
+	echo '$1'
+	echo "$2"
+	#grep -rl "$1" . | xargs sed -i '' "s/$1/$2/g"
+	grep -rl 'pdf' . | xargs sed -i '' 's/pdf/dddasd/g'
+}
 
-export PATH=/usr/local/bin:$PATH
+alias snr=SerachAndReplace
 
-# add /usr/local/sbin
-if [[ -d /usr/local/sbin ]]; then
-    export PATH=/usr/local/sbin:$PATH
-fi
+#
+#Pandoc reference documents
+#
+MINDS_DOTFILES_PANDOC_PATH=~/.5minds.dotfiles/pandoc
+MINDS_PANDOC_TEMPLATE_TELKO=$MINDS_DOTFILES_PANDOC_PATH/templates/5Minds.Telko.Ref.docx
+MINDS_PANDOC_TEMPLATE_CONCEPT=~/.5minds.dotfiles/pandoc/templates/5Minds.Ref.docx
 
-# adding path directory for custom scripts
-export PATH=$DOTFILES/bin:$PATH
+alias ls3rdpartydriver="kextstat | grep -v com.apple"
+alias lstty='ls /dev/tty*'
+alias reload!='source ~/.zshrc'
 
-# check for custom bin directory and add to path
-if [[ -d ~/bin ]]; then
-    export PATH=~/bin:$PATH
-fi
+function git_clone_from_github() {
+  USER=""
+  REPO=""
+  TARGET=""
+  if [[ "$#" -lt 1 ]]; then
+    echo "usage: $0 [user] [repo] [target]
+                Specifyind the 'user' is optional. Then I will assume to use the \$GIT_USER.
+                The 'target' is optional and can contain the folder to clone into"
+    return 1
+  fi
+  if [[ "$#" -eq 1 ]]; then
+    echo "Assuming default git-user"
+    if [[ -z $GIT_USER ]]; then
+      echo "Plase consider setting \$GIT_USER."
+      echo "No git-user found -> aborting"
+      return 1
+    fi
+    USER=$GIT_USER
+    REPO=$1
+  fi
+  if [[ "$#" -ge 2 ]]; then
+    USER=$1
+    REPO=$2
+  fi
+  if [[ "$#" -eq 3 ]]; then
+    TARGET=$3
+  fi
+  echo "Performing: 'git clone git@github.com:${USER}/${REPO} ${TARGET}'"
+  git clone git@github.com:${USER}/${REPO} $TARGET
+  return 0
+}
+alias ghclone!=git_clone_from_github
 
-[ -z "$TMUX" ] && export TERM=xterm-256color
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/
 
-# install rbenv
-if hash rbenv 2>/dev/null; then
-    eval "$(rbenv init -)"
-fi
-
-if [[ -d ~/.rvm ]]; then
-    PATH=$HOME/.rvm/bin:$PATH # Add RVM to PATH for scripting
-    source ~/.rvm/scripts/rvm
-fi
-
-# alias git to hub
-if hash hub 2>/dev/null; then
-    eval "$(hub alias -s)"
-fi
-
-# source nvm
-export NVM_DIR=~/.nvm
-
-if hash brew 2>/dev/null; then
-    source $(brew --prefix nvm)/nvm.sh
-    source `brew --prefix`/etc/profile.d/z.sh
-fi
-
-
-# Base16 Shell
-# if [ -z "$THEME" ]; then
-    export THEME="base16-chalk"
-# fi
-if [ -z "$BACKGROUND" ]; then
-    export BACKGROUND="dark"
-fi
-
-BASE16_SHELL="$DOTFILES/.config/base16-shell/$THEME.$BACKGROUND.sh"
-# [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
-source $BASE16_SHELL
-
+source ~/.zsh.hufsm
+PATH=/usr/local/bin:${PATH/:\/usr\/local\/bin}
