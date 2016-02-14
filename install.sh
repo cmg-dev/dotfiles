@@ -8,6 +8,7 @@ git submodule update --init --recursive
 source install/link.sh
 
 if [ "$(uname)" == "Darwin" ]; then
+    xcode-select --install
     echo "Running on OSX"
 
     echo "Brewing all the things"
