@@ -28,6 +28,6 @@ echo "Installing additional stuff"
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 echo "Configuring zsh as default shell"
-chsh -s $(which zsh)
+chsh -s $(grep /zsh$ /etc/shells | tail -1)
 
 echo "Done."
