@@ -5,6 +5,9 @@ echo "Installing dotfiles"
 # oh-my-zsh
 git clone https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh
 
+# Terminal solarized
+git clone https://github.com/tomislav/osx-terminal.app-colors-solarized ~/.osx_terminal_solarized
+
 source install/link.sh
 
 if [ "$(uname)" == "Darwin" ]; then
