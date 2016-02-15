@@ -27,7 +27,7 @@ mkdir -p ~/.vim-tmp
 echo "Installing additional stuff"
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-curl https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim
+curl "https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim" >> solarized.vim
 mkdir ~/.vim/colors
 mv solarized.vim ~/.vim/colors/
 
