@@ -12,7 +12,6 @@ call vundle#begin()
 Plugin 'gmarik/vundle'
 
 " utilities
-Plugin 'kien/ctrlp.vim' " fuzzy find files
 Plugin 'scrooloose/nerdtree' " file drawer, open with :NERDTreeToggle
 Plugin 'benmills/vimux'
 Plugin 'tpope/vim-fugitive' " the ultimate git helper
@@ -26,10 +25,10 @@ Plugin 'chriskempson/base16-vim'
 Plugin 'tpope/vim-surround'
 
 " JavaScript plugins
-Plugin 'pangloss/vim-javascript'
-Plugin 'jelera/vim-javascript-syntax'
+"Plugin 'pangloss/vim-javascript'
+"Plugin 'jelera/vim-javascript-syntax'
 
-"Plugin 'vim-scripts/restore_view'
+Plugin 'vim-scripts/restore_view'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'rizzatti/dash.vim'
 
@@ -38,6 +37,10 @@ Plugin 'SirVer/ultisnips'
 
 " Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
+
+Plugin 'easymotion/vim-easymotion'
+Bundle "XadillaX/json-formatter.vim"
+Plugin 'kien/ctrlp.vim' " fuzzy find files
 
 call vundle#end()
 
@@ -90,7 +93,7 @@ set ignorecase " case insensitive searching
 set smartcase " case-sensitive if expresson contains a capital letter
 set hlsearch
 set incsearch " set incremental search, like modern browsers
-"set lazyredraw " don't redraw while executing macros
+set lazyredraw " don't redraw while executing macros
 
 set magic " Set magic on, for regex
 
@@ -212,14 +215,64 @@ au BufWinEnter ?* silent loadview
 
 " If we leave the window, the trailing whitespaces will be stripped
 autocmd BufWritePre * :%s/\s\+$//ei
-"nmap <leader><space> :%s:\s\+$::gc<cr>
+nmap <leader><space> :%s:\s\+$::gc<cr>
 
 highlight SpellBad ctermfg=DarkMagenta
-highlight CursorLine cterm=NONE ctermbg=black ctermfg=NONE guibg=darkred guifg=white
 
+highlight CursorLine cterm=NONE ctermbg=black ctermfg=NONE guibg=darkred guifg=white
 highlight CursorColumn cterm=NONE ctermbg=black ctermfg=NONE guibg=darkred guifg=white
 nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
 set colorcolumn=120
 
 set runtimepath+=~/.vim/after/ftplugin/
+
+" {{{ bc stuff
+vnoremap <Leader>bc "ey:call CalcBC()<CR>
+function! CalcBC()
+  let has_equal = 0
+  " remove newlines and trailing spaces
+  let @e = substitute (@e, "\n", "", "g")
+  let @e = substitute (@e, '\s*$', "", "g")
+  " if we end with an equal, strip, and remember for output
+  if @e =~ "=$"
+    let @e = substitute (@e, '=$', "", "")
+    let has_equal = 1
+  endif
+  " sub common func names for bc equivalent
+  let @e = substitute (@e, '\csin\s*(', "s (", "")
+  let @e = substitute (@e, '\ccos\s*(', "c (", "")
+  let @e = substitute (@e, '\catan\s*(', "a (", "")
+  let @e = substitute (@e, "\cln\s*(", "l (", "")
+  " escape chars for shell
+  let @e = escape (@e, '*()')
+  " run bc, strip newline
+  let answer = substitute (system ("echo " . @e . " \| bc -l"), "\n", "", "")
+  " append answer or echo
+  if has_equal == 1
+    normal `>
+    exec "normal a" . answer
+  else
+    echo "answer = " . answer
+  endif
+endfunction
+" }}}
+
+" {{{ CtrlP config
+nnoremap <Leader>p :CtrlP<CR>
+" }}}
+
+" {{{ Term color change
+let is_background_dark=1
+nnoremap <Leader>m "ey:call Change_vim_background_color()<CR>
+nnoremap <Leader>d :se background=dark<CR>
+nnoremap <Leader>l :se background=light<CR>
+
+function! Change_vim_background_color(current_color_black)
+	if current_color_black == 1
+		se background=light
+	else
+		se background=dark
+	endif
+endfunction
+" }}}
