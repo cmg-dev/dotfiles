@@ -22,6 +22,9 @@ if [ "$(uname)" == "Darwin" ]; then
 
     echo "Installing node (from nvm)"
     source install/nvm.sh
+
+    echo "Installing extra software using cask“
+    source install/brew-cask.sh
 fi
 
 echo "creating vim directories"
