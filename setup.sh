@@ -3,6 +3,7 @@
 echo "Installing dotfiles"
 
 touch ~/.bash_profile
+touch ~/.zshrc
 
 # oh-my-zsh
 git clone https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh
