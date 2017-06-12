@@ -25,7 +25,7 @@ brew install reattach-to-user-namespace
 brew install tmux
 brew install zsh
 brew install highlight
-brew install nvm
+# brew install nvm
 brew install z
 brew install markdown
 brew install midnight-commander

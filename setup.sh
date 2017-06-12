@@ -2,6 +2,8 @@
 
 echo "Installing dotfiles"
 
+touch ~/.bash_profile
+
 # oh-my-zsh
 git clone https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh
 
@@ -20,7 +22,7 @@ if [ "$(uname)" == "Darwin" ]; then
     echo "Updating OSX settings"
     source install/osx.sh
 
-    echo "Installing node (from nvm)"
+    echo "Installing nvm and node“
     source install/nvm.sh
 
     echo "Installing extra software using cask"
