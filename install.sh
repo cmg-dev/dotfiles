@@ -25,7 +25,7 @@ echo "Attempting to git clone $USER_DOTFILES_REPO ..."
 touch ~/.bash_profile
 touch ~/.zshrc
 
-scripts=( installers/oh-my-zsh installers/nvm_node_npm installers/brew installers/brew_applications installers/brew_cask_applications configs/osx )
+scripts=( installers/oh_my_zsh installers/nvm_node_npm installers/brew installers/brew_applications installers/brew_cask_applications configs/osx )
 for script in "${scripts[@]}"
 do
   echo "##################################"
