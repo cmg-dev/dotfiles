@@ -1,20 +1,46 @@
 #!/bin/bash
 
-if [[ "$PWD" != "$HOME/.dotfiles" ]]; then
-  echo "You must run this script in $HOME/.dotfiles/"
-  echo "Run git clone xxx && cd $HOME/.dotfiles && ./install.sh to change"
+DOTFILES_DIR=$HOME/.dotfiles
+GLOBALS='globals.sh'
+TOUCH_FILES=(
+  '~/.bash_profile'
+  '~/.zshrc'
+)
+NVM_INSTALLER='high5/installers/nvm_node_npm.sh'
+SCRIPTS=(
+  'installers/brew'
+  'installers/brew_applications'
+  'installers/brew_cask_applications'
+  'configs/osx'
+  'installers/oh_my_zsh'
+)
+
+if [[ $PWD != $DOTFILES_DIR ]]; then
+  echo "You must run this script in $DOTFILES_DIR"
+  echo "Run git clone xxx && cd $DOTFILES_DIR && ./install.sh to change"
   exit 1
 fi
 
 echo "IMPORTANT: Please not that you have to install the following software first:"
 echo "git, xcode."
-
+echo ""
 echo "Installing dotfiles"
 
-while [[ -z "$GITHUB_USER_NAME" ]]
-do
-  read -p "Enter github user name: " GITHUB_USER_NAME
-done
+# run yeoman (ask for github user etc.) -> user_input.json
+# run mustach -> create globals.sh from user_input.json
+# source globals.sh
+
+# install nvm, node
+source NVM_INSTALLER
+
+# install yeoman we need this for our generator
+npm install -g yo
+# startup application and yeoman
+# this will create the globals.sh file
+# TODO: npm unlink ??
+npm install && npm link && yo dotfiles
+source GLOBALS
+
 
 USER_DOTFILES_REPO="https://github.com/$GITHUB_USER_NAME/dotfiles"
 
@@ -22,11 +48,12 @@ echo "Attempting to git clone $USER_DOTFILES_REPO ..."
 
 # git clone $USER_DOTFILES_REPO local5
 
-touch ~/.bash_profile
-touch ~/.zshrc
+for file in "${TOUCH_FILES[@]}"
+do
+  touch $file
+done
 
-scripts=( installers/oh_my_zsh installers/nvm_node_npm installers/brew installers/brew_applications installers/brew_cask_applications configs/osx )
-for script in "${scripts[@]}"
+for script in "${SCRIPTS[@]}"
 do
   echo "##################################"
 	echo "Running script $script"
@@ -34,11 +61,11 @@ do
   # run base scirpt
   source "high5/$script.sh"
   # run local overrides
-  if [ -f local5/$script.sh ]; then
+  if [[ -f local5/$script.sh ]]; then
     source "local5/$script.sh"
   fi
   # run post script hooks
-  if [ -f high5/$script.post.sh ]; then
+  if [[ -f high5/$script.post.sh ]]; then
     source "high5/$script.post.sh"
   fi
 

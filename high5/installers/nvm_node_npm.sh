@@ -10,5 +10,8 @@ if test ! $(command -v nvm); then
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
     # install stable node version
-    nvm install lts
+    nvm install --lts
+    lts_version=$(nvm ls lts/*)
+    lts_version_clean=${lts_version##*v}
+    nvm use default $lts_version_clean
 fi
