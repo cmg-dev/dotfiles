@@ -22,7 +22,7 @@ if [ "$(uname)" == "Darwin" ]; then
     echo "Updating OSX settings"
     source install/osx.sh
 
-    echo "Installing nvm and node“
+    echo "Installing nvm and node"
     source install/nvm.sh
 
     echo "Installing extra software using cask"
