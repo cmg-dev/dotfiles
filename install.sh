@@ -6,8 +6,9 @@ TOUCH_FILES=(
   '~/.bash_profile'
   '~/.zshrc'
 )
-NVM_INSTALLER='high5/installers/nvm_node_npm.sh'
+NVM_INSTALLER='high5/installers/nvm_node.sh'
 SCRIPTS=(
+  'installers/link_symlinks'
   'installers/brew'
   'installers/brew_applications'
   'installers/brew_cask_applications'
@@ -23,23 +24,27 @@ fi
 
 echo "IMPORTANT: Please not that you have to install the following software first:"
 echo "git, xcode."
+echo "Add your sshkey to your github account before running this script."
 echo ""
 echo "Installing dotfiles"
-
-# run yeoman (ask for github user etc.) -> user_input.json
-# run mustach -> create globals.sh from user_input.json
-# source globals.sh
 
 # install nvm, node
 source NVM_INSTALLER
 
 # install yeoman we need this for our generator
 npm install -g yo
+
 # startup application and yeoman
 # this will create the globals.sh file
 # TODO: npm unlink ??
 npm install && npm link && yo dotfiles
+
+# load globals into env
 source GLOBALS
+
+# configure git
+git config --global user.name $GIT_USER_NAME
+git config --global user.email $GIT_USER_EMAIL
 
 
 USER_DOTFILES_REPO="https://github.com/$GITHUB_USER_NAME/dotfiles"
@@ -69,7 +74,8 @@ do
     source "high5/$script.post.sh"
   fi
 
-
 done
+
+
 
 # rm -fr local5
