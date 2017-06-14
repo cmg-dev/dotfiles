@@ -78,6 +78,15 @@ do
   fi
 done
 
+printf "${GREEN}"
+echo ''
+echo '         __      __  _____ __         '
+echo '    ____/ /___  / /_/ __(_) /__  _____'
+echo '   / __  / __ \/ __/ /_/ / / _ \/ ___/'
+echo '  / /_/ / /_/ / /_/ __/ / /  __(__  ) '
+echo '  \__,_/\____/\__/_/ /_/_/\___/____/  ...are now installed!'
+echo ''
+printf "${NORMAL}"
 
 
 # rm -fr local5
