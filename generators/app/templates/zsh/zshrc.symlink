@@ -51,7 +51,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git bundler osx rake virtualenv ssh-agent git-flow battery brew gitignore mix vim-interaction z)
+plugins=(git nvm bundler osx rake virtualenv ssh-agent git-flow battery brew gitignore mix vim-interaction z)
 
 # User configuration
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/TeX/texbin:/usr/local/include/nr3:/usr/local/include/nr3:/opt/local/bin:/opt/local/sbin"
