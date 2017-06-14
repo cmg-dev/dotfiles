@@ -3,8 +3,8 @@
 DOTFILES_DIR=$HOME/.dotfiles
 GLOBALS='globals.sh'
 TOUCH_FILES=(
-  '~/.bash_profile'
-  '~/.zshrc'
+  '$HOME/.bash_profile'
+  '$HOME/.zshrc'
 )
 NVM_INSTALLER='high5/installers/nvm_node.sh'
 SCRIPTS=(
@@ -29,7 +29,7 @@ echo ""
 echo "Installing dotfiles"
 
 # install nvm, node
-source NVM_INSTALLER
+source $NVM_INSTALLER
 
 # install yeoman we need this for our generator
 npm install -g yo
@@ -40,7 +40,7 @@ npm install -g yo
 npm install && npm link && yo dotfiles
 
 # load globals into env
-source GLOBALS
+source $GLOBALS
 
 # configure git
 git config --global user.name $GIT_USER_NAME
