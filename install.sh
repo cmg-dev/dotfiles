@@ -2,6 +2,7 @@
 
 DOTFILES_DIR="$HOME/.dotfiles"
 GLOBALS='globals.sh'
+COLORS='colors.sh'
 TOUCH_FILES=(
   "$HOME/.bash_profile"
 )
@@ -14,6 +15,9 @@ SCRIPTS=(
   'configs/osx'
   'installers/oh_my_zsh'
 )
+
+# include colors
+source $COLORS
 
 if [[ $PWD != $DOTFILES_DIR ]]; then
   echo "You must run this script in $DOTFILES_DIR"
@@ -72,7 +76,6 @@ do
   if [[ -f high5/$script.post.sh ]]; then
     source "high5/$script.post.sh"
   fi
-
 done
 
 
