@@ -10,7 +10,7 @@ brew cask install toggldesktop
 
 brew cask install google-chrome
 brew cask install chrome-devtools
-brew cask install firefox-de
+brew cask install firefox
 
 brew cask install caffeine
 
