@@ -8,12 +8,12 @@ TOUCH_FILES=(
 )
 NVM_INSTALLER='high5/installers/nvm_node.sh'
 SCRIPTS=(
-  'installers/link_symlinks'
   'installers/brew'
   'installers/brew_applications'
   'installers/brew_cask_applications'
   'configs/osx'
   'installers/oh_my_zsh'
+  'installers/link_symlinks'
 )
 
 # include colors
