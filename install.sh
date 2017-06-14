@@ -1,10 +1,10 @@
 #!/bin/bash
 
-DOTFILES_DIR=$HOME/.dotfiles
+DOTFILES_DIR="$HOME/.dotfiles"
 GLOBALS='globals.sh'
 TOUCH_FILES=(
-  '$HOME/.bash_profile'
-  '$HOME/.zshrc'
+  "$HOME/.bash_profile"
+  "$HOME/.zshrc"
 )
 NVM_INSTALLER='high5/installers/nvm_node.sh'
 SCRIPTS=(
