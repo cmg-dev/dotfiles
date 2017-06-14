@@ -4,7 +4,6 @@ DOTFILES_DIR="$HOME/.dotfiles"
 GLOBALS='globals.sh'
 TOUCH_FILES=(
   "$HOME/.bash_profile"
-  "$HOME/.zshrc"
 )
 NVM_INSTALLER='high5/installers/nvm_node.sh'
 SCRIPTS=(
@@ -26,7 +25,12 @@ echo "IMPORTANT: Please not that you have to install the following software firs
 echo "git, xcode."
 echo "Add your sshkey to your github account before running this script."
 echo ""
-echo "Installing dotfiles"
+
+# touch local files
+for file in "${TOUCH_FILES[@]}"
+do
+  touch $file
+done
 
 # install nvm, node
 source $NVM_INSTALLER
@@ -52,11 +56,6 @@ USER_DOTFILES_REPO="https://github.com/$GITHUB_USER_NAME/dotfiles"
 echo "Attempting to git clone $USER_DOTFILES_REPO ..."
 
 # git clone $USER_DOTFILES_REPO local5
-
-for file in "${TOUCH_FILES[@]}"
-do
-  touch $file
-done
 
 for script in "${SCRIPTS[@]}"
 do
